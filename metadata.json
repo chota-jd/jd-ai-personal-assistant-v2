@@ -1,0 +1,7 @@
+{
+  "name": "JD - AI Executive Assistant",
+  "description": "A high-performance personal AI executive assistant named JD, focused on task completion, discipline, and voice-activated management.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

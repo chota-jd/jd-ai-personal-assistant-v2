@@ -11,8 +11,11 @@ export default function Header({ userName, isLive, errorStatus, onToggleAssistan
   return (
     <header className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-16 border-b border-zinc-900 pb-10 relative z-10">
       <div>
-        <h1 className="text-6xl font-black tracking-tighter mb-2 uppercase italic leading-none text-white flex items-center gap-3">
-          JD <span className="text-zinc-800">/</span> Executive Assistant
+      <h1 className="text-6xl font-black tracking-tighter mb-2 uppercase italic leading-none text-white flex items-center gap-3">
+          JD
+          <span className="text-zinc-400 text-4xl ml-1">|</span> 
+
+        <span className="text-zinc-400 text-4xl ml-2">Executive Assistant</span> 
         </h1>
         <div className="flex items-center gap-4">
           <p className="text-zinc-600 font-bold uppercase text-[9px] tracking-[0.4em]">Personal Executive Protocol</p>

@@ -455,10 +455,9 @@ export default function HomePage() {
 
         <div className="lg:col-span-3 space-y-6">
           <div className="flex justify-between items-center mb-4 px-1">
-            <h2 className="text-zinc-600 uppercase text-[9px] font-black tracking-widest flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-zinc-800 rounded-full" /> Mission_Parameters
+            <h2 className="text-zinc-600  text-base font-semibold tracking-widest flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-zinc-800 rounded-full" /> Todo List
             </h2>
-            <span className="text-[9px] text-zinc-800 font-mono tracking-tighter">PROTOCOL_V4.02_STABLE</span>
           </div>
 
           <div className="space-y-4">

@@ -594,7 +594,7 @@ export default function App() {
         <div className="lg:col-span-3 space-y-6">
           <div className="flex justify-between items-center mb-4 px-1">
             <h2 className="text-cyan-300/90 uppercase text-[9px] font-black tracking-widest flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse shadow-lg shadow-cyan-400/50" /> Mission_Parameters
+              <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse shadow-lg shadow-cyan-400/50" /> Mission_Parameterss
             </h2>
             <span className="text-[9px] text-white/50 font-mono tracking-tighter bg-white/5 px-3 py-1 rounded border border-white/10">PROTOCOL_V4.02_STABLE</span>
           </div>

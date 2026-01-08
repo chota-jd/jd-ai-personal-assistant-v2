@@ -5,14 +5,28 @@
 @layer base {
   body {
     font-family: 'Inter', sans-serif;
-    background-color: #000;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 25%, #162447 50%, #0f1419 75%, #0a0e27 100%);
+    background-size: 400% 400%;
+    animation: gradient-shift 20s ease infinite;
     color: #fff;
     overflow-x: hidden;
+    min-height: 100vh;
   }
   
   .mono {
     font-family: 'JetBrains Mono', monospace;
   }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes gradient-shift-text {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 @layer utilities {
@@ -25,5 +39,47 @@
   
   .notify-pulse {
     animation: pulse-glow 2s infinite ease-in-out;
+  }
+  
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 30%, #8b5cf6 60%, #ec4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift-text 3s ease infinite;
+    background-size: 200% 200%;
+  }
+  
+  .gradient-border {
+    position: relative;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    border: 1px solid transparent;
+  }
+  
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.5), rgba(118, 75, 162, 0.5), rgba(240, 147, 251, 0.5));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
   }
 }

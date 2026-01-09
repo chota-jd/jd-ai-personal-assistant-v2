@@ -42,8 +42,16 @@ export default function HomePage() {
   const mediaStreamRef = useRef<MediaStream | null>(null);
   const sourcesRef = useRef<Set<AudioBufferSourceNode>>(new Set());
   const isSessionActiveRef = useRef(false);
+  const processedAudioMessagesRef = useRef<Set<string>>(new Set());
 
   const speak = useCallback(async (text: string) => {
+    // Don't use TTS when live assistant is active - it handles audio itself
+    if (isLive || isSessionActiveRef.current) {
+      console.log('Skipping TTS - live assistant is active');
+      setJdOutputLog(text);
+      return;
+    }
+    
     if (!text || text.trim() === '') return;
     
     try {
@@ -88,7 +96,7 @@ export default function HomePage() {
       console.error("JD Speech Error:", e);
       setJdOutputLog(text);
     }
-  }, []);
+  }, [isLive]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -221,6 +229,7 @@ export default function HomePage() {
       try { source.stop(); } catch (e) {}
     }
     sourcesRef.current.clear();
+    processedAudioMessagesRef.current.clear(); // Clear processed audio IDs
     
     setIsLive(false);
     setUserInputLog('');
@@ -300,15 +309,43 @@ export default function HomePage() {
             
             const base64Audio = message.serverContent?.modelTurn?.parts?.[0]?.inlineData?.data;
             if (base64Audio) {
-              nextStartTimeRef.current = Math.max(nextStartTimeRef.current, outputCtx.currentTime);
-              const audioBuffer = await decodeAudioData(decode(base64Audio), outputCtx, 24000, 1);
-              const source = outputCtx.createBufferSource();
-              source.buffer = audioBuffer;
-              source.connect(outputCtx.destination);
-              source.start(nextStartTimeRef.current);
-              nextStartTimeRef.current += audioBuffer.duration;
-              sourcesRef.current.add(source);
-              source.onended = () => sourcesRef.current.delete(source);
+              // Create a unique ID for this audio chunk to prevent duplicate playback
+              const audioId = base64Audio.substring(0, 50); // Use first 50 chars as ID
+              
+              // Skip if we've already processed this audio
+              if (processedAudioMessagesRef.current.has(audioId)) {
+                console.log('Skipping duplicate audio playback');
+                return;
+              }
+              
+              processedAudioMessagesRef.current.add(audioId);
+              
+              // Clean up old entries to prevent memory leak (keep last 100)
+              if (processedAudioMessagesRef.current.size > 100) {
+                const firstEntry = processedAudioMessagesRef.current.values().next().value;
+                if (firstEntry) {
+                  processedAudioMessagesRef.current.delete(firstEntry);
+                }
+              }
+              
+              try {
+                nextStartTimeRef.current = Math.max(nextStartTimeRef.current, outputCtx.currentTime);
+                const audioBuffer = await decodeAudioData(decode(base64Audio), outputCtx, 24000, 1);
+                const source = outputCtx.createBufferSource();
+                source.buffer = audioBuffer;
+                source.connect(outputCtx.destination);
+                source.start(nextStartTimeRef.current);
+                nextStartTimeRef.current += audioBuffer.duration;
+                sourcesRef.current.add(source);
+                source.onended = () => {
+                  sourcesRef.current.delete(source);
+                  // Remove from processed set after playback completes
+                  setTimeout(() => processedAudioMessagesRef.current.delete(audioId), 1000);
+                };
+              } catch (error) {
+                console.error('Error playing audio:', error);
+                processedAudioMessagesRef.current.delete(audioId);
+              }
             }
 
             if (message.toolCall && message.toolCall.functionCalls) {

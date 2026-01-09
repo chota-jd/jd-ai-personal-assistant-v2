@@ -421,7 +421,7 @@ export default function HomePage() {
   })[0];
 
   return (
-    <div className="min-h-screen bg-black text-white p-6 md:p-12 font-sans overflow-hidden">
+    <div className="min-h-screen bg-black text-white p-4 sm:p-6 md:p-12 font-sans overflow-x-hidden">
       <div className="fixed top-0 left-0 w-full h-full pointer-events-none opacity-5">
         <div className="grid grid-cols-12 h-full w-full">
           {[...Array(12)].map((_, i) => <div key={i} className="border-r border-white/20 h-full" />)}
@@ -436,8 +436,8 @@ export default function HomePage() {
         onToggleAssistant={toggleAssistant}
       />
 
-      <main className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-12 relative z-10">
-        <div className="lg:col-span-1 space-y-8">
+      <main className="max-w-5xl mx-auto flex flex-col lg:grid lg:grid-cols-4 gap-6 md:gap-8 lg:gap-12 relative z-10">
+        <div className="lg:col-span-1 flex flex-col gap-6 md:gap-8">
           <StatsPanel 
             tasks={tasks}
             pendingTasks={pendingTasks}
@@ -453,16 +453,16 @@ export default function HomePage() {
           />
         </div>
 
-        <div className="lg:col-span-3 space-y-6">
-          <div className="flex justify-between items-center mb-4 px-1">
-            <h2 className="text-zinc-600  text-base font-semibold tracking-widest flex items-center gap-2">
+        <div className="lg:col-span-3 flex flex-col gap-4 md:gap-6">
+          <div className="flex justify-between items-center mb-2 md:mb-4 px-1">
+            <h2 className="text-zinc-600 text-sm md:text-base font-semibold tracking-widest flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-zinc-800 rounded-full" /> Todo List
             </h2>
           </div>
 
-          <div className="space-y-4">
+          <div className="flex flex-col gap-4">
             {pendingTasks.length === 0 && (
-              <div className="py-40 text-center border border-dashed border-zinc-900 bg-zinc-950/20">
+              <div className="py-20 md:py-40 text-center border border-dashed border-zinc-900 bg-zinc-950/20">
                 <p className="text-zinc-800 text-xs font-black uppercase tracking-[0.5em]">Operational_Vacuum</p>
                 <p className="text-zinc-900 text-[10px] mt-6 uppercase font-bold tracking-widest">Awaiting directive from primary user.</p>
               </div>
@@ -490,8 +490,8 @@ export default function HomePage() {
         </div>
       </main>
 
-      <footer className="max-w-5xl mx-auto mt-40 pt-12 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-4 text-zinc-800 text-[9px] font-black uppercase tracking-[0.4em]">
-        <div className="flex items-center gap-6">
+      <footer className="max-w-5xl mx-auto mt-20 md:mt-40 pt-8 md:pt-12 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-4 text-zinc-800 text-[9px] font-black uppercase tracking-[0.4em] px-4">
+        <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6">
           <span>Operational_Logic_Enabled</span>
           <div className="w-1 h-1 bg-zinc-900 rounded-full" />
           <span>System_v4.02-STABLE</span>

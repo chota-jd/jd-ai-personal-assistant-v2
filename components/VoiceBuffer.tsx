@@ -9,16 +9,16 @@ interface VoiceBufferProps {
 
 export default function VoiceBuffer({ isLive, isProcessing, userInputLog, jdOutputLog }: VoiceBufferProps) {
   return (
-    <div className="glass-strong p-8 rounded-xl min-h-[220px] relative flex flex-col shadow-2xl border-white/10">
+    <div className="glass-strong p-6 md:p-8 rounded-xl min-h-[180px] md:min-h-[220px] relative flex flex-col shadow-2xl border-white/10 w-full">
       <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-blue-500/5 to-cyan-500/5 opacity-50 rounded-xl" />
-      <h2 className="text-cyan-300/90 uppercase text-[9px] font-black tracking-widest mb-6 flex justify-between items-center relative z-10">
+      <h2 className="text-cyan-300/90 uppercase text-[9px] font-black tracking-widest mb-4 md:mb-6 flex justify-between items-center relative z-10">
         <span>Voice_Buffer</span>
         {isProcessing && <span className="text-cyan-400 animate-pulse flex items-center gap-1">
           <span className="w-1 h-1 bg-cyan-400 rounded-full animate-ping" />PROC_
         </span>}
       </h2>
       
-      <div className="flex-1 space-y-4 overflow-hidden relative z-10">
+      <div className="flex-1 space-y-3 md:space-y-4 overflow-hidden relative z-10">
         {isLive ? (
           <>
             <div className={`transition-all duration-300 ${userInputLog ? 'opacity-100' : 'opacity-30'}`}>
